@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func main() {
@@ -9,24 +10,10 @@ func main() {
 	// max_num := maxNumArr(test_arr)
 	// fmt.Printf("the hightest number in the provided array is: %v\n", max_num)
 
-	arr := []int32{-4, 3, -9, 0, 4, 1}
+	// arr := []int32{-4, 3, -9, 0, 4, 1}
+	pos_arr := []int32{1, 2, 3, 4, 5}
 	// plusMinus(arr)
-	test_ll := new(LinkedList)
-	for _, v := range arr {
-		test_ll.InsertNode(v)
-	}
-	test_ll.Print()
-
-	test_stack := new(Stack)
-	for _, v := range arr {
-		test_stack.Push(v)
-	}
-	fmt.Println("stack after push")
-	test_stack.Print()
-	//pop
-	test_stack.Pop()
-	fmt.Println("stack after pop")
-	test_stack.Print()
+	minMaxSum(pos_arr)
 }
 
 /*
@@ -71,4 +58,20 @@ func plusMinus(arr []int32) {
 Given five positive integers, find the minimum and maximum values that can be calculated by summing exactly four of the five integers. Then print the respective minimum and maximum values as a single line of two space-separated long integers.
 */
 func minMaxSum(arr []int32) {
+	max, min := math.Inf(-1), math.Inf(1)
+	var totalSum float64
+	for _, v := range arr {
+		totalSum += float64(v)
+	}
+
+	for _, v := range arr {
+		sum_without_current_value := totalSum - float64(v)
+		if sum_without_current_value < min {
+			min = sum_without_current_value
+		}
+		if sum_without_current_value > max {
+			max = sum_without_current_value
+		}
+	}
+	fmt.Println(min, max)
 }
