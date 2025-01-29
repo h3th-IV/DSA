@@ -12,11 +12,21 @@ func main() {
 	arr := []int32{-4, 3, -9, 0, 4, 1}
 	// plusMinus(arr)
 	test_ll := new(LinkedList)
-	fmt.Println("here")
 	for _, v := range arr {
 		test_ll.InsertNode(v)
 	}
 	test_ll.Print()
+
+	test_stack := new(Stack)
+	for _, v := range arr {
+		test_stack.Push(v)
+	}
+	fmt.Println("stack after push")
+	test_stack.Print()
+	//pop
+	test_stack.Pop()
+	fmt.Println("stack after pop")
+	test_stack.Print()
 }
 
 /*
