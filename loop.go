@@ -18,7 +18,6 @@ func Looper() {
 	for j <= 10 {
 		fmt.Printf("%d", j)
 	}
-
 	//infinite loop
 	for {
 		fmt.Println("something")
