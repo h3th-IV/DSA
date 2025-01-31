@@ -11,9 +11,22 @@ func main() {
 	// fmt.Printf("the hightest number in the provided array is: %v\n", max_num)
 
 	// arr := []int32{-4, 3, -9, 0, 4, 1}
-	pos_arr := []int32{1, 2, 3, 4, 5}
+	// pos_arr := []int32{1, 2, 3, 4, 5}
 	// plusMinus(arr)
-	minMaxSum(pos_arr)
+	// minMaxSum(pos_arr)
+
+	// ans := checkPalindrome("kayak")
+	// fmt.Println(ans)
+
+	// fmt.Println(reverseNum(90001))
+	fmt.Println(isPalindrome("kayak"))
+}
+
+// reverse a string
+func ReverseString(data string) {
+	for i := 0; i < len(data); i++ {
+		fmt.Printf("%c", data[len(data)-i-1])
+	}
 }
 
 /*
@@ -57,6 +70,7 @@ func plusMinus(arr []int32) {
 /*
 Given five positive integers, find the minimum and maximum values that can be calculated by summing exactly four of the five integers. Then print the respective minimum and maximum values as a single line of two space-separated long integers.
 */
+
 func minMaxSum(arr []int32) {
 	max, min := math.Inf(-1), math.Inf(1)
 	var totalSum float64
@@ -74,4 +88,50 @@ func minMaxSum(arr []int32) {
 		}
 	}
 	fmt.Println(min, max)
+}
+
+func reversal(data string) string {
+	lengh := len(data)
+	reversedData := ""
+	fmt.Println("")
+	for i, _ := range data {
+		reversedData += string(data[lengh-i-1])
+	}
+	return reversedData
+}
+
+// palindrome a word that can
+func checkPalindrome(data string) bool {
+	reversedString := reversal(data)
+	word_len := len(data)
+	for i := 0; i < word_len; i++ {
+		if data[i] != reversedString[i] {
+			return false
+		}
+	}
+	return true
+}
+
+// reverse an integer
+func reverseNum(num int) int {
+	reversed_num := 0
+	for num != 0 {
+		last_digit := num % 10
+		reversed_num = reversed_num*10 + last_digit
+		num = num / 10
+	}
+	return reversed_num
+}
+
+func isPalindrome(data string) bool {
+	word_len := len(data)
+	var start, end = 0, word_len - 1
+	for start < end {
+		if data[start] != data[end] {
+			return false
+		}
+		start++
+		end--
+	}
+	return true
 }
