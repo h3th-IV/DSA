@@ -2,24 +2,30 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math"
+	"regexp"
+	"strconv"
+	"strings"
+	"sync"
 )
 
 func main() {
-	// test_arr := []float64{1, 2, 3, 4, 5, 5, 6, 7, 56, 9, 0, 89, 9, 19, 99, 101, 0, 1, 2, 3, 7, 3, 2, 8, 1, 5, 150, 0, 2, 4, 2, 6, 3, 100, 500, 9, 3, 6, 2, 6, 2, 9, -2}
-	// max_num := maxNumArr(test_arr)
-	// fmt.Printf("the hightest number in the provided array is: %v\n", max_num)
+	channel := make(chan int)
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		PrintNumber(channel)
+		wg.Done()
+	}()
 
-	// arr := []int32{-4, 3, -9, 0, 4, 1}
-	// pos_arr := []int32{1, 2, 3, 4, 5}
-	// plusMinus(arr)
-	// minMaxSum(pos_arr)
-
-	// ans := checkPalindrome("kayak")
-	// fmt.Println(ans)
-
-	// fmt.Println(reverseNum(90001))
-	fmt.Println(isPalindrome("kayak"))
+	fmt.Println("Running the main function...")
+	for num := range channel {
+		fmt.Println(num)
+	}
+	fmt.Println("running other go routines...")
+	wg.Wait()
+	fmt.Println("Done with main function")
 }
 
 // reverse a string
@@ -134,4 +140,151 @@ func isPalindrome(data string) bool {
 		end--
 	}
 	return true
+}
+
+func factorial(num int) int {
+	if num == 0 {
+		return 1
+	}
+	result := 1
+	for i := 1; i <= num; i++ {
+		result *= i
+	}
+	return result
+}
+
+// 12 hr conversion to 24 hr
+func timeConversion(time string) string {
+	timex := strings.Split(time, ":")
+	if len(timex) != 3 {
+		log.Println("wrong time format")
+	}
+	hr, err := strconv.Atoi(timex[0])
+	if err != nil {
+		log.Println("err converting hr to int")
+	}
+	min := timex[1]
+	secMer := timex[2]
+	re := regexp.MustCompile(`[a-zA-Z]+`)
+	sec := re.ReplaceAllString(secMer, "")
+	if strings.Contains(secMer, "PM") && hr != 12 {
+		hr += 12
+	} else if strings.Contains(secMer, "AM") && hr == 12 {
+		hr = 0
+	}
+	return fmt.Sprintf("%02d:%v:%v", hr, min, sec)
+}
+
+func compareTriplets(a []int32, b []int32) []int32 {
+	results := [2]int32{}
+	for i := 0; i < 3; i++ {
+		if a[i] > b[i] {
+			results[0] += 1
+		} else if a[i] < b[i] {
+			results[1] += 1
+		}
+	}
+	fmt.Println(results)
+	return results[:]
+}
+
+func getDiagonalDifference(arr [][]int) uint {
+	leng := len(arr)
+	var (
+		l_r int
+		r_l int
+	)
+	for _, v := range arr {
+		if len(v) != leng {
+			log.Printf("the input matrix is not a square matrix")
+		}
+	}
+	for i := 0; i < len(arr); i++ {
+		l_r += arr[i][i]
+		r_l += arr[i][len(arr)-1-i]
+	}
+	fmt.Println(uint(l_r - r_l))
+	return uint(l_r - r_l)
+}
+
+func PrintStair(thread int) {
+	for i := 1; i <= thread; i++ {
+		for j := 1; j <= thread-i; j++ {
+			fmt.Printf("  ")
+		}
+		for k := 1; k <= i; k++ {
+			fmt.Printf("# ")
+		}
+		fmt.Println()
+	}
+}
+
+func bDayCandles(arr []int) {
+	var (
+		total int
+		high  int
+	)
+	for _, v := range arr {
+		if v > high {
+			high = v
+		}
+	}
+
+	for _, v := range arr {
+		if v == high {
+			total += 1
+		}
+	}
+	fmt.Println(total)
+}
+
+func repeatedString(s string, n int64) int64 {
+	var acount int64
+	for _, v := range s[:n] {
+		if v == 'a' {
+			acount += 1
+		}
+	}
+	fullRep := n / int64(len(s))
+	rem := n % int64(len(s))
+	count := fullRep * acount
+
+	for _, v := range s[:rem] {
+		if v == 'a' {
+			count++
+		}
+	}
+	fmt.Println(count)
+	return count
+}
+
+func jumpCloud(clouds []int) int {
+	jumps := 0
+	current := 0
+	for current < len(clouds)-1 {
+		if current+2 < len(clouds) && clouds[current+2] == 0 {
+			current += 2
+		} else {
+			current += 1
+		}
+		jumps++
+	}
+	return jumps
+}
+
+func sortCards(cards []interface{}) []interface{} {
+	cardOrder := map[string]int{
+		"2":     2,
+		"3":     3,
+		"4":     4,
+		"5":     5,
+		"6":     6,
+		"7":     7,
+		"8":     8,
+		"9":     9,
+		"10":    10,
+		"Jack":  11,
+		"Queen": 12,
+		"King":  13,
+	}
 }
