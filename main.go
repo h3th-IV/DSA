@@ -3,7 +3,9 @@ package main
 import "fmt"
 
 func main(){
-	prices := []int{7, 1, 5, 3, 6, 4}
+	// prices := []int{7, 1, 5, 3, 6, 4}
+	prices := []int{9,2,5,3,6,7,1}
+
 
 	brute_max_profit := brute_max_profit_day(prices)
 	fmt.Println(brute_max_profit)
