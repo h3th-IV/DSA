@@ -11,7 +11,10 @@ func main(){
 	max_profit := max_profit_day(prices)
 	fmt.Println(max_profit)
 
-	nums := []int{3,7,5,1,6}
-	axis := brute_two_sum(nums, 9)
+	nums := []int{2, 7, 4, 5, 8}
+	brute_axis := brute_two_sum(nums, 9)
+	fmt.Println(brute_axis)
+
+	axis := two_sum(nums, 9)
 	fmt.Println(axis)
 }
