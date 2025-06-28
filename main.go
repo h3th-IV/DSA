@@ -23,4 +23,7 @@ func main(){
 	dup_array := []int{1,1,2,3,4,4}
 	dup_exist := check_duplicate(dup_array)
 	fmt.Println(dup_exist)
+
+	mp_dup_exist := map_check_duplicate(dup_array)
+	fmt.Println(mp_dup_exist)
 }
