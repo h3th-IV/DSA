@@ -32,4 +32,11 @@ func main() {
 
 	brt_output_arr := brute_product_except_self(prd_array)
 	fmt.Println(brt_output_arr)
+
+	max_array := []int{-2, 1, -3, 4, -1, 2, 1, -5, 4}
+	max_sub_array_num := brute_max_sub_array(max_array)
+	fmt.Println(max_sub_array_num)
+
+	max_sub_array_sum := max_sub_array(max_array)
+	fmt.Println(max_sub_array_sum)
 }
