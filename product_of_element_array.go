@@ -28,3 +28,20 @@ func product_except_self(nums []int) []int {
 
 	return output
 }
+
+// O(n^2)
+func brute_product_except_self(nums []int) []int {
+	n := len(nums)
+	results := make([]int, n)
+
+	for i := 0; i < n; i++ {
+		product := 1
+		for j := 0; j < n; j++ {
+			if i != j {
+				product *= nums[j]
+			}
+		}
+		results[i] = product
+	}
+	return results
+}

@@ -29,4 +29,7 @@ func main() {
 	prd_array := []int{1, 2, 3, 4}
 	output_array := product_except_self(prd_array)
 	fmt.Println(output_array)
+
+	brt_output_arr := brute_product_except_self(prd_array)
+	fmt.Println(brt_output_arr)
 }
