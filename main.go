@@ -1,42 +1,34 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+)
 
 func main() {
-	// prices := []int{7, 1, 5, 3, 6, 4}
-	prices := []int{9, 2, 5, 3, 6, 7, 1}
+	items = append(items, Item{Id: 1, Name: "ProArt16", Quantity: 10})
+	items = append(items, Item{Id: 1, Name: "ProArt17", Quantity: 15})
 
-	brute_max_profit := brute_max_profit_day(prices)
-	fmt.Println(brute_max_profit)
+	fmt.Println("test server running at :7005")
+	http.HandleFunc("/get-all", getAllItem)
+	http.ListenAndServe(":7005", nil)
+}
 
-	max_profit := max_profit_day(prices)
-	fmt.Println(max_profit)
+type Item struct {
+	Id       int
+	Name     string
+	Quantity int
+}
 
-	nums := []int{2, 7, 4, 5, 8}
-	brute_axis := brute_two_sum(nums, 9)
-	fmt.Println(brute_axis)
+var items []Item
 
-	axis := two_sum(nums, 9)
-	fmt.Println(axis)
-
-	dup_array := []int{1, 1, 2, 3, 4, 4}
-	dup_exist := check_duplicate(dup_array)
-	fmt.Println(dup_exist)
-
-	mp_dup_exist := map_check_duplicate(dup_array)
-	fmt.Println(mp_dup_exist)
-
-	prd_array := []int{1, 2, 3, 4}
-	output_array := product_except_self(prd_array)
-	fmt.Println(output_array)
-
-	brt_output_arr := brute_product_except_self(prd_array)
-	fmt.Println(brt_output_arr)
-
-	max_array := []int{-2, 1, -3, 4, -1, 2, 1, -5, 4}
-	max_sub_array_num := brute_max_sub_array(max_array)
-	fmt.Println(max_sub_array_num)
-
-	max_sub_array_sum := max_sub_array(max_array)
-	fmt.Println(max_sub_array_sum)
+func getAllItem(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode("Method not allowed")
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(items)
 }
